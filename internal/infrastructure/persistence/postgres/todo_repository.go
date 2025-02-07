@@ -9,6 +9,10 @@ var _ repository.TodoRepository = &TodoRepository{}
 
 type TodoRepository struct{}
 
+func NewTodoRepository() *TodoRepository {
+	return &TodoRepository{}
+}
+
 // GetTodo implements repository.TodoRepository.
 func (t *TodoRepository) GetTodo(id int) (todo entity.Todo, err error) {
 	panic("unimplemented")
