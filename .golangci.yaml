@@ -1,0 +1,41 @@
+---
+run:
+    timeout: 3m
+    tests: false
+
+linters:
+    enable-all: true
+    disable:
+        # restrictive
+        - exhaustruct
+        - varnamelen
+        - nlreturn
+        - funlen
+        - nonamedreturns
+        - gochecknoglobals
+        - wsl
+        - nakedret
+        - err113
+        # deprecated
+        - exportloopref
+
+linters-settings:
+    depguard:
+        rules:
+            main:
+                list-mode: strict
+                files:
+                    - $all
+                allow:
+                    - $gostd
+                    - github.com/stanislav-zeman/go-ddd
+    dupl:
+        threshold: 200
+
+output:
+    sort-results: true
+    formats:
+        - format: colored-line-number
+          path: stdout
+        - format: tab
+          path: golangci-lint.out
