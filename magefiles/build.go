@@ -7,5 +7,5 @@ import (
 )
 
 func Build(cmd string) error {
-	return sh.Run("go", "build", "-o", "bin/"+cmd, "cmd/"+cmd)
+	return sh.Run("go", "build", "-o", "./bin/"+cmd, "./cmd/"+cmd)
 }
