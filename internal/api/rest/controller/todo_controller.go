@@ -22,10 +22,13 @@ func NewTodoController(service interfaces.TodoService) *TodoController {
 	}
 }
 
-func MountControllers(e *echo.Echo) {
+func (td *TodoController) MountControllers(g *echo.Group) {
+	g.GET("/todos/:todoId", td.GetTodoController)
+	g.POST("/todos", td.UpsertTodoController)
 }
 
-func (td *TodoController) GetTodoController(c echo.Context) {
+func (td *TodoController) GetTodoController(c echo.Context) error {
+	fmt.Println("xd hand")
 	var req request.GetTodoRequest
 	if err := c.Bind(&req); err != nil {
 		c.JSON(http.StatusBadRequest,
@@ -33,7 +36,7 @@ func (td *TodoController) GetTodoController(c echo.Context) {
 				Error: fmt.Errorf("failed parsing request: %w", err),
 			},
 		)
-		return
+		return nil
 	}
 
 	q := req.ToGetTodoQuery()
@@ -44,7 +47,7 @@ func (td *TodoController) GetTodoController(c echo.Context) {
 				Error: repository.ErrTodoNotFound,
 			},
 		)
-		return
+		return nil
 	}
 
 	if err != nil {
@@ -53,15 +56,17 @@ func (td *TodoController) GetTodoController(c echo.Context) {
 				Error: errors.New("failed fetching todo data"),
 			},
 		)
-		return
+		return nil
 	}
 
 	res := response.NewGetTodoResponseFromQueryResult(result)
 
 	c.JSON(http.StatusOK, res)
+
+	return nil
 }
 
-func (td *TodoController) UpsertTodoController(c echo.Context) {
+func (td *TodoController) UpsertTodoController(c echo.Context) error {
 	var req request.UpsertTodoRequest
 	if err := c.Bind(&req); err != nil {
 		c.JSON(http.StatusBadRequest,
@@ -69,7 +74,7 @@ func (td *TodoController) UpsertTodoController(c echo.Context) {
 				Error: fmt.Errorf("failed parsing request: %w", err),
 			},
 		)
-		return
+		return nil
 	}
 
 	cmnd := req.ToUpsertTodoCommand()
@@ -80,10 +85,12 @@ func (td *TodoController) UpsertTodoController(c echo.Context) {
 				Error: errors.New("failed fetching todo data"),
 			},
 		)
-		return
+		return nil
 	}
 
 	res := response.NewUpsertTodoResponseFromCommandResult(result)
 
 	c.JSON(http.StatusOK, res)
+
+	return nil
 }
