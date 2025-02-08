@@ -10,9 +10,26 @@ on:
             - README.md
 
 jobs:
+    setup:
+        name: Setup
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Go
+              uses: actions/setup-go@v5
+              with:
+                go-version: '1.23.x'
+
+            - name: Install mage
+              run: go install github.com/magefile/mage
+
     build:
         name: Build
         runs-on: ubuntu-latest
+        needs: [setup]
 
         steps:
             - name: Checkout
@@ -29,6 +46,7 @@ jobs:
     lint:
         name: Lint
         runs-on: ubuntu-latest
+        needs: [setup]
 
         steps:
             - name: Checkout
