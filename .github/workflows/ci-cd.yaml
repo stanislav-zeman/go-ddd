@@ -26,17 +26,11 @@ jobs:
             - name: Install mage
               run: go install github.com/magefile/mage
 
-            - name: Which
-              run: which mage
-
-            - name: List
-              run: ls $GOPATH/bin
-
             - name: Upload mage
               uses: actions/upload-artifact@v4
               with:
                 name: mage
-                path: $GOPATH/bin/mage
+                path: /home/runner/go/bin/mage
                 retention-days: 1
 
     build:
@@ -57,7 +51,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                 name: mage
-                path: $GOPATH/bin/mage
+                path: /home/runner/go/bin/mage
 
             - name: Build
               run: mage build
@@ -80,7 +74,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                 name: mage
-                path: $GOPATH/bin/mage
+                path: /home/runner/go/bin/mage
 
             - name: Lint
               run: mage lint
@@ -110,7 +104,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                 name: mage
-                path: $GOPATH/bin/mage
+                path: /home/runner/go/bin/mage
 
             - name: Test
               run: mage test
