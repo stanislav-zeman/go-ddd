@@ -26,6 +26,9 @@ jobs:
             - name: Install mage
               run: go install github.com/magefile/mage
 
+            - name: Which
+              run: which mage
+
             - name: List
               run: ls $GOPATH/bin
 
