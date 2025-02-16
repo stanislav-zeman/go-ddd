@@ -17,7 +17,7 @@ linters:
         - nakedret
         - err113
         # deprecated
-        - exportloopref
+        - tenv
 
 linters-settings:
     depguard:
@@ -29,8 +29,13 @@ linters-settings:
                 allow:
                     - $gostd
                     - github.com/stanislav-zeman/go-ddd
+                    - github.com/labstack/echo/v4
+                    - github.com/jackc/pgx/v5
     dupl:
         threshold: 200
+    wrapcheck:
+        extra-ignore-sigs:
+            - .JSON(
 
 output:
     sort-results: true
