@@ -78,13 +78,13 @@ jobs:
             - name: Coveralls
               uses: coverallsapp/github-action@v2
               with:
-                file: coverage.out
+                file: cp.out
 
             - name: Upload coverage artifact
               uses: actions/upload-artifact@v4
               with:
-                name: coverage.out
-                path: coverage.out
+                name: cp.out
+                path: cp.out
                 retention-days: 7
 
     sonar:
