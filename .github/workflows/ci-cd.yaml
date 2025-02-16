@@ -106,7 +106,7 @@ jobs:
             - name: Include coverage
               uses: actions/download-artifact@v4
               with:
-                name: coverage.out
+                name: cp.out
 
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
