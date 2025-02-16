@@ -28,7 +28,6 @@ func (td *TodoController) MountControllers(g *echo.Group) {
 }
 
 func (td *TodoController) GetTodoController(c echo.Context) error {
-	fmt.Println("xd hand")
 	var req request.GetTodoRequest
 	if err := c.Bind(&req); err != nil {
 		c.JSON(http.StatusBadRequest,
