@@ -27,7 +27,7 @@ jobs:
               run: go install github.com/magefile/mage
 
             - name: Build
-              run: mage build
+              run: mage build todos
 
     lint:
         name: Lint
