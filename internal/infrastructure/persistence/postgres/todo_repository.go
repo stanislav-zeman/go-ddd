@@ -38,7 +38,6 @@ func (tr *TodoRepository) GetTodo(ctx context.Context, id int) (todo entity.Todo
 	if errors.Is(err, pgx.ErrNoRows) {
 		err = repository.ErrTodoNotFound
 		return
-
 	}
 
 	if err != nil {
@@ -69,7 +68,7 @@ func (tr *TodoRepository) UpsertTodo(ctx context.Context, todo entity.Todo) (err
 	}
 
 	if t.RowsAffected() != 1 {
-		err = fmt.Errorf("no rows were affected")
+		err = errors.New("no rows were affected")
 		return
 	}
 

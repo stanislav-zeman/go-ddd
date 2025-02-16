@@ -6,6 +6,6 @@ import (
 
 type UpsertTodoResponse struct{}
 
-func NewUpsertTodoResponseFromCommandResult(result *command.UpsertTodoCommandResult) *UpsertTodoResponse {
+func NewUpsertTodoResponseFromCommandResult(_ *command.UpsertTodoCommandResult) *UpsertTodoResponse {
 	return &UpsertTodoResponse{}
 }

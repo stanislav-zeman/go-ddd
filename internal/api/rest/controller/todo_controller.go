@@ -30,66 +30,57 @@ func (td *TodoController) MountControllers(g *echo.Group) {
 func (td *TodoController) GetTodoController(c echo.Context) error {
 	var req request.GetTodoRequest
 	if err := c.Bind(&req); err != nil {
-		c.JSON(http.StatusBadRequest,
+		return c.JSON(http.StatusBadRequest,
 			response.ErrorResponse{
 				Error: fmt.Errorf("failed parsing request: %w", err),
 			},
 		)
-		return nil
 	}
 
 	q := req.ToGetTodoQuery()
-	result, err := td.service.GetTodo(q)
+	result, err := td.service.GetTodo(c.Request().Context(), q)
 	if errors.Is(err, repository.ErrTodoNotFound) {
-		c.JSON(http.StatusNotFound,
+		return c.JSON(http.StatusNotFound,
 			response.ErrorResponse{
 				Error: repository.ErrTodoNotFound,
 			},
 		)
-		return nil
 	}
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError,
+		return c.JSON(http.StatusInternalServerError,
 			response.ErrorResponse{
 				Error: errors.New("failed fetching todo data"),
 			},
 		)
-		return nil
 	}
 
 	res := response.NewGetTodoResponseFromQueryResult(result)
 
-	c.JSON(http.StatusOK, res)
-
-	return nil
+	return c.JSON(http.StatusOK, res)
 }
 
 func (td *TodoController) UpsertTodoController(c echo.Context) error {
 	var req request.UpsertTodoRequest
 	if err := c.Bind(&req); err != nil {
-		c.JSON(http.StatusBadRequest,
+		return c.JSON(http.StatusBadRequest,
 			response.ErrorResponse{
 				Error: fmt.Errorf("failed parsing request: %w", err),
 			},
 		)
-		return nil
 	}
 
-	cmnd := req.ToUpsertTodoCommand()
-	result, err := td.service.UpsertTodo(cmnd)
+	cmd := req.ToUpsertTodoCommand()
+	result, err := td.service.UpsertTodo(c.Request().Context(), cmd)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError,
+		return c.JSON(http.StatusInternalServerError,
 			response.ErrorResponse{
 				Error: errors.New("failed fetching todo data"),
 			},
 		)
-		return nil
 	}
 
 	res := response.NewUpsertTodoResponseFromCommandResult(result)
 
-	c.JSON(http.StatusOK, res)
-
-	return nil
+	return c.JSON(http.StatusOK, res)
 }
