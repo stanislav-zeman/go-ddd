@@ -1,0 +1,9 @@
+---
+services:
+    todos:
+        build:
+            dockerfile: Dockerfile.build
+            args:
+                CMD_NAME: todos
+                CMD_BIN_PATH: bin/todos
+                CMD_CONFIG_PATH: config/todos.yaml
