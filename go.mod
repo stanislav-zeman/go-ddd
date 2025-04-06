@@ -1,6 +1,6 @@
 module github.com/stanislav-zeman/go-ddd
 
-go 1.24.0
+go 1.24.2
 
 require (
 	github.com/golangci/golangci-lint v1.64.5
